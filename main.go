@@ -8,9 +8,8 @@ import (
 )
 
 var (
-	addr       = flag.String("addr", ":8080", "listen address")
-	key        = flag.String("key", "", "secret key")
-	bufferSize = flag.Int("buffer-size", 64*1024, "buffer size in bytes")
+	addr = flag.String("addr", ":8080", "listen address")
+	key  = flag.String("key", "", "secret key")
 )
 
 func main() {
