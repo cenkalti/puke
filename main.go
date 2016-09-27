@@ -9,7 +9,11 @@ import (
 
 var (
 	addr = flag.String("addr", ":8080", "listen address")
-	key  = flag.String("key", "", "secret key")
+)
+
+const (
+	defaultBufferSize = "262144" // 256K
+	defaultDuration   = "20s"
 )
 
 func main() {
@@ -20,13 +24,9 @@ func main() {
 }
 
 func puke(w http.ResponseWriter, r *http.Request) {
-	if r.FormValue("key") != *key {
-		http.Error(w, "invalid key", 401)
-		return
-	}
 	bufferSizeStr := r.FormValue("bufferSize")
 	if bufferSizeStr == "" {
-		bufferSizeStr = "256000"
+		bufferSizeStr = defaultBufferSize
 	}
 	bufferSize, err := strconv.Atoi(bufferSizeStr)
 	if err != nil {
@@ -35,7 +35,7 @@ func puke(w http.ResponseWriter, r *http.Request) {
 	}
 	durationStr := r.FormValue("duration")
 	if durationStr == "" {
-		durationStr = "20s"
+		durationStr = defaultDuration
 	}
 	duration, err := time.ParseDuration(durationStr)
 	if err != nil {
